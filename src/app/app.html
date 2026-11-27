@@ -1,3 +1,29 @@
-<h1>Catálogo de Rick and Morty</h1>
+<nav>
 
-<app-lista />
+  <a routerLink="/inicio" routerLinkActive="activo">
+    Inicio
+  </a>
+
+  <a routerLink="/catalogo" routerLinkActive="activo">
+    Catálogo
+  </a>
+
+  <a routerLink="/admin" routerLinkActive="activo">
+    Admin
+  </a>
+
+  @if (auth.isLoggedIn()) {
+    <button (click)="cerrarSesion()">
+      Cerrar sesión
+    </button>
+  }
+
+  @if (!auth.isLoggedIn()) {
+    <a routerLink="/login" routerLinkActive="activo">
+      Iniciar sesión
+    </a>
+  }
+
+</nav>
+
+<router-outlet />

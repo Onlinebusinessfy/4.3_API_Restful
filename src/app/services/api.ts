@@ -43,8 +43,10 @@ export class ApiService {
   }
 
   // Obtener un personaje por su ID
-  getById(id: number): Observable<Personaje> {
-    return this.http.get<Personaje>(`${this.url}/${id}`);
+  getById(id: number) {
+    return this.http.get<Personaje>(
+      `https://rickandmortyapi.com/api/character/${id}`
+    );
   }
 
   // Enviar una publicación de prueba mediante POST
