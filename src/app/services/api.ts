@@ -2,7 +2,18 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
 
-import { Personaje, RespuestaApi } from '../models/personaje.interface';
+import {
+  Personaje,
+  RespuestaApi
+} from '../models/personaje.interface';
+
+// Interfaz para definir la respuesta que devuelve JSONPlaceholder
+export interface PostRespuesta {
+  id: number;
+  title: string;
+  body: string;
+  userId: number;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +21,8 @@ import { Personaje, RespuestaApi } from '../models/personaje.interface';
 export class ApiService {
 
   private http = inject(HttpClient);
+
+  // URL de la API de Rick and Morty
   private url = 'https://rickandmortyapi.com/api/character';
 
   // Obtener todos los personajes de una página
@@ -22,8 +35,28 @@ export class ApiService {
     );
   }
 
+  // Buscar personajes por nombre y página
+  getByName(nombre: string, pagina = 1): Observable<RespuestaApi> {
+    return this.http.get<RespuestaApi>(
+      `${this.url}?name=${encodeURIComponent(nombre)}&page=${pagina}`
+    );
+  }
+
   // Obtener un personaje por su ID
   getById(id: number): Observable<Personaje> {
     return this.http.get<Personaje>(`${this.url}/${id}`);
+  }
+
+  // Enviar una publicación de prueba mediante POST
+  crearPost(datos: {
+    title: string;
+    body: string;
+    userId: number;
+  }): Observable<PostRespuesta> {
+
+    return this.http.post<PostRespuesta>(
+      'https://jsonplaceholder.typicode.com/posts',
+      datos
+    );
   }
 }

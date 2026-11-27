@@ -1,13 +1,103 @@
+<h2>Catálogo de Rick and Morty</h2>
+
+<!-- Buscador de personajes -->
+<div class="buscador">
+  <input
+    type="text"
+    placeholder="Buscar personaje por nombre..."
+    [value]="nombreBusqueda()"
+    (input)="actualizarBusqueda($event)"
+    (keyup.enter)="buscarPersonaje()"
+  >
+
+  <button (click)="buscarPersonaje()">Buscar</button>
+  <button (click)="limpiarBusqueda()">Limpiar</button>
+</div>
+
+<!-- Mensajes de carga y errores -->
 @if (cargando()) {
-  <p>Cargando...</p>
+  <p>Cargando personajes...</p>
 } @else if (error()) {
   <p class="error">{{ error() }}</p>
 } @else {
+
+  <!-- Tarjetas de personajes -->
   <div class="contenedor-tarjetas">
     @for (p of personajes(); track p.id) {
       <app-tarjeta [personaje]="p" />
     } @empty {
       <p>No hay resultados.</p>
     }
+  </div>
+
+  <!-- Botones de paginación -->
+  @if (info()) {
+    <div class="paginacion">
+      <button
+        (click)="cambiarPagina('prev')"
+        [disabled]="!info()?.prev"
+      >
+        Anterior
+      </button>
+
+      <span>Página {{ pagina() }} de {{ info()?.pages }}</span>
+
+      <button
+        (click)="cambiarPagina('next')"
+        [disabled]="!info()?.next"
+      >
+        Siguiente
+      </button>
+    </div>
+  }
+}
+
+<hr>
+
+<!-- Formulario POST -->
+<h2>Crear publicación de prueba</h2>
+
+<div class="formulario-post">
+
+  <label>Título:</label>
+
+  <input
+    type="text"
+    placeholder="Escribe un título"
+    [value]="tituloPost()"
+    (input)="actualizarTitulo($event)"
+  >
+
+  <label>Contenido:</label>
+
+  <textarea
+    placeholder="Escribe el contenido"
+    [value]="contenidoPost()"
+    (input)="actualizarContenido($event)"
+  ></textarea>
+
+  <button
+    (click)="enviarPost()"
+    [disabled]="!tituloPost().trim() || !contenidoPost().trim()"
+  >
+    Enviar publicación
+  </button>
+
+</div>
+
+<!-- Mostrar respuesta del servidor -->
+@if (respuestaPost()) {
+  <div class="respuesta-post">
+
+    <h3>Respuesta del servidor</h3>
+
+    <p><strong>ID:</strong> {{ respuestaPost()?.id }}</p>
+
+    <p><strong>Título:</strong> {{ respuestaPost()?.title }}</p>
+
+    <p><strong>Contenido:</strong> {{ respuestaPost()?.body }}</p>
+
+    <p><strong>Usuario:</strong> {{ respuestaPost()?.userId }}</p>
+
   </div>
 }
