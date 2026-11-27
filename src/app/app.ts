@@ -1,12 +1,12 @@
-import { ApplicationConfig } from '@angular/core';
-import { provideRouter } from '@angular/router';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { Component } from '@angular/core';
+import { Lista } from './components/lista/lista';
 
-import { routes } from './app.routes';
+@Component({
+  selector: 'app-root',
+  imports: [Lista],
+  templateUrl: './app.html',
+  styleUrl: './app.css'
+})
+export class AppComponent {
 
-export const appConfig: ApplicationConfig = {
-  providers: [
-    provideHttpClient(withFetch()),
-    provideRouter(routes)
-  ]
-};
+}
