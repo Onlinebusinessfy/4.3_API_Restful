@@ -1,0 +1,15 @@
+<div class="tarjeta">
+  <img [src]="personaje().image" [alt]="personaje().name">
+
+  <div class="informacion">
+    <h2>{{ personaje().name }}</h2>
+
+    <p>
+      <strong>Especie:</strong> {{ personaje().species }}
+    </p>
+
+    <p>
+      <strong>Estado:</strong> {{ personaje().status }}
+    </p>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+.tarjeta {
+  width: 250px;
+  background-color: #272b33;
+  color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 15px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+}
+
+.tarjeta img {
+  width: 100%;
+  display: block;
+}
+
+.informacion {
+  padding: 15px;
+}
+
+.informacion h2 {
+  margin-top: 0;
+  color: #97ce4c;
+}
+
+.informacion p {
+  margin: 8px 0;
+}

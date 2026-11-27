@@ -2,3 +2,10 @@
   color: red;
   font-weight: bold;
 }
+
+.contenedor-tarjetas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}

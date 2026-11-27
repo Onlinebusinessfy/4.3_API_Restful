@@ -3,9 +3,11 @@
 } @else if (error()) {
   <p class="error">{{ error() }}</p>
 } @else {
-  @for (p of personajes(); track p.id) {
-    <p>{{ p.name }}</p>
-  } @empty {
-    <p>No hay resultados.</p>
-  }
+  <div class="contenedor-tarjetas">
+    @for (p of personajes(); track p.id) {
+      <app-tarjeta [personaje]="p" />
+    } @empty {
+      <p>No hay resultados.</p>
+    }
+  </div>
 }
