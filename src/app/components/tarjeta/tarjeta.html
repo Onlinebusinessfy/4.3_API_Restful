@@ -11,5 +11,10 @@
     <p>
       <strong>Estado:</strong> {{ personaje().status }}
     </p>
+
+    <a [routerLink]="['/catalogo', personaje().id]">
+      Ver detalles
+    </a>
+
   </div>
 </div>

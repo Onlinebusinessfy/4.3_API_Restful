@@ -1,103 +1,213 @@
-<h2>Catálogo de Rick and Morty</h2>
 
-<!-- Buscador de personajes -->
-<div class="buscador">
-  <input
-    type="text"
-    placeholder="Buscar personaje por nombre..."
-    [value]="nombreBusqueda()"
-    (input)="actualizarBusqueda($event)"
-    (keyup.enter)="buscarPersonaje()"
-  >
+<section class="catalogo">
 
-  <button (click)="buscarPersonaje()">Buscar</button>
-  <button (click)="limpiarBusqueda()">Limpiar</button>
-</div>
+  <!-- Encabezado -->
+  <header class="encabezado-catalogo">
+    <span class="etiqueta">DIMENSION C-137</span>
 
-<!-- Mensajes de carga y errores -->
-@if (cargando()) {
-  <p>Cargando personajes...</p>
-} @else if (error()) {
-  <p class="error">{{ error() }}</p>
-} @else {
+    <h1>Explora el multiverso</h1>
 
-  <!-- Tarjetas de personajes -->
-  <div class="contenedor-tarjetas">
-    @for (p of personajes(); track p.id) {
-      <app-tarjeta [personaje]="p" />
-    } @empty {
-      <p>No hay resultados.</p>
-    }
-  </div>
+    <p>
+      Descubre personajes, universos y criaturas
+      del increíble mundo de Rick and Morty.
+    </p>
 
-  <!-- Botones de paginación -->
-  @if (info()) {
-    <div class="paginacion">
-      <button
-        (click)="cambiarPagina('prev')"
-        [disabled]="!info()?.prev"
-      >
-        Anterior
-      </button>
-
-      <span>Página {{ pagina() }} de {{ info()?.pages }}</span>
-
-      <button
-        (click)="cambiarPagina('next')"
-        [disabled]="!info()?.next"
-      >
-        Siguiente
-      </button>
+    <div class="estadistica">
+      <span class="punto-verde"></span>
+      PERSONAJES DEL MULTIVERSO
     </div>
+  </header>
+
+  <!-- Buscador -->
+  <section class="seccion-buscador">
+
+    <div class="titulo-seccion">
+      <div>
+        <span class="subtitulo">BASE DE DATOS</span>
+        <h2>Catálogo de personajes</h2>
+      </div>
+    </div>
+
+    <div class="buscador">
+
+      <div class="input-busqueda">
+        <span>⌕</span>
+
+        <input
+          type="text"
+          placeholder="Buscar personaje por nombre..."
+          [value]="nombreBusqueda()"
+          (input)="actualizarBusqueda($event)"
+          (keyup.enter)="buscarPersonaje()"
+        >
+      </div>
+
+      <button class="btn-buscar" (click)="buscarPersonaje()">
+        Buscar personaje
+      </button>
+
+      <button class="btn-limpiar" (click)="limpiarBusqueda()">
+        Limpiar
+      </button>
+
+    </div>
+
+  </section>
+
+  <!-- Carga y errores -->
+  @if (cargando()) {
+
+    <div class="estado-carga">
+      <div class="loader"></div>
+      <h3>Explorando dimensiones...</h3>
+      <p>Estamos buscando personajes del multiverso.</p>
+    </div>
+
+  } @else if (error()) {
+
+    <div class="mensaje-error">
+      <h3>¡Algo salió mal!</h3>
+      <p>{{ error() }}</p>
+    </div>
+
+  } @else {
+
+    <!-- Personajes -->
+    <section class="seccion-personajes">
+
+      <div class="resultados-info">
+        <h3>Personajes encontrados</h3>
+        <span>Dimensión actual: C-137</span>
+      </div>
+
+      <div class="contenedor-tarjetas">
+
+        @for (p of personajes(); track p.id) {
+          <app-tarjeta [personaje]="p" />
+        } @empty {
+          <div class="sin-resultados">
+            <h3>No encontramos personajes</h3>
+            <p>Intenta buscar con otro nombre.</p>
+          </div>
+        }
+
+      </div>
+
+    </section>
+
+    <!-- Paginación -->
+    @if (info()) {
+
+      <section class="paginacion">
+
+        <button
+          (click)="cambiarPagina('prev')"
+          [disabled]="!info()?.prev"
+        >
+          ← Anterior
+        </button>
+
+        <div class="numero-pagina">
+          <span>PÁGINA</span>
+          <strong>{{ pagina() }}</strong>
+          <span>DE {{ info()?.pages }}</span>
+        </div>
+
+        <button
+          (click)="cambiarPagina('next')"
+          [disabled]="!info()?.next"
+        >
+          Siguiente →
+        </button>
+
+      </section>
+
+    }
+
   }
-}
 
-<hr>
-
-<!-- Formulario POST -->
-<h2>Crear publicación de prueba</h2>
-
-<div class="formulario-post">
-
-  <label>Título:</label>
-
-  <input
-    type="text"
-    placeholder="Escribe un título"
-    [value]="tituloPost()"
-    (input)="actualizarTitulo($event)"
-  >
-
-  <label>Contenido:</label>
-
-  <textarea
-    placeholder="Escribe el contenido"
-    [value]="contenidoPost()"
-    (input)="actualizarContenido($event)"
-  ></textarea>
-
-  <button
-    (click)="enviarPost()"
-    [disabled]="!tituloPost().trim() || !contenidoPost().trim()"
-  >
-    Enviar publicación
-  </button>
-
-</div>
-
-<!-- Mostrar respuesta del servidor -->
-@if (respuestaPost()) {
-  <div class="respuesta-post">
-
-    <h3>Respuesta del servidor</h3>
-
-    <p><strong>ID:</strong> {{ respuestaPost()?.id }}</p>
-
-    <p><strong>Título:</strong> {{ respuestaPost()?.title }}</p>
-
-    <p><strong>Contenido:</strong> {{ respuestaPost()?.body }}</p>
-
-    <p><strong>Usuario:</strong> {{ respuestaPost()?.userId }}</p>
-
+  <!-- Separador -->
+  <div class="separador">
+    <span></span>
+    <p>PORTAL DE EXPERIMENTACIÓN</p>
+    <span></span>
   </div>
-}
+
+  <!-- Formulario POST -->
+  <section class="seccion-post">
+
+    <div class="encabezado-post">
+      <span class="subtitulo">LABORATORIO DE RICK</span>
+      <h2>Crear publicación</h2>
+      <p>
+        Envía información de prueba al servidor
+        utilizando una solicitud HTTP POST.
+      </p>
+    </div>
+
+    <div class="formulario-post">
+
+      <label>Título de la publicación</label>
+
+      <input
+        type="text"
+        placeholder="Escribe un título..."
+        [value]="tituloPost()"
+        (input)="actualizarTitulo($event)"
+      >
+
+      <label>Contenido</label>
+
+      <textarea
+        placeholder="Escribe el contenido de tu publicación..."
+        [value]="contenidoPost()"
+        (input)="actualizarContenido($event)"
+      ></textarea>
+
+      <button
+        class="btn-enviar"
+        (click)="enviarPost()"
+        [disabled]="!tituloPost().trim() || !contenidoPost().trim()"
+      >
+        Enviar publicación →
+      </button>
+
+    </div>
+
+    <!-- Respuesta -->
+    @if (respuestaPost()) {
+
+      <div class="respuesta-post">
+
+        <div class="respuesta-titulo">
+          <span class="estado-exito"></span>
+          <h3>Publicación enviada correctamente</h3>
+        </div>
+
+        <div class="dato-respuesta">
+          <span>ID</span>
+          <strong>{{ respuestaPost()?.id }}</strong>
+        </div>
+
+        <div class="dato-respuesta">
+          <span>Título</span>
+          <strong>{{ respuestaPost()?.title }}</strong>
+        </div>
+
+        <div class="dato-respuesta">
+          <span>Contenido</span>
+          <strong>{{ respuestaPost()?.body }}</strong>
+        </div>
+
+        <div class="dato-respuesta">
+          <span>Usuario</span>
+          <strong>{{ respuestaPost()?.userId }}</strong>
+        </div>
+
+      </div>
+
+    }
+
+  </section>
+
+</section>
